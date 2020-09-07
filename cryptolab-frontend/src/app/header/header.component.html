@@ -1,0 +1,30 @@
+<div>
+    <div class="header">
+        <div class="menu-heading-left">
+            Welcome back <strong>{{userName}}</strong>
+        </div>
+        <div class="menu-icon-holder-right">
+            <div class="round-icon">
+                <span data-toggle="tooltip" title="Logout" class="round-icon-icon"><a (click)="showLogoutModal()"><i
+                            class="fa fa-sign-out fa-2x"></i></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Logout Modal Popup -->
+<ng-template #logoutModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Confirm Logout</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Are you sure you want to logout?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="logout()">Confirm</button>
+        <button type="button" class="btn btn-secondary" (click)="hideModal()">Cancel</button>
+    </div>
+</ng-template>

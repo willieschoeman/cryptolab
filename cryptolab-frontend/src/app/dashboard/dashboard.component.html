@@ -1,0 +1,110 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading">
+  <div class="container">
+    <h1>Crypto Dashboard</h1>
+
+    <div class="row search">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <label class="form-control-label">Search <span class="selected-text">{{selected}}</span>:</label>
+        <input type="text" placeholder="" class="form-control" [(ngModel)]="searchString" name="search">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="option-toggler">
+          <button [ngClass]="(isCrypto===false)?'btn-primary':'btn-secondary'" class="btn" (click)="toggleCrypto()">By Currency</button>
+          <button [ngClass]="(isCrypto===true)?'btn-primary':'btn-secondary'" class="btn" (click)="toggleCrypto()">By Crypto</button>        
+        </div>
+        <div *ngIf="isCrypto">
+          <div *ngFor="let entry of cryptoDataFrom | search:'FROMSYMBOL':searchString; let i = index">
+            <div>
+              <div class="from-header">{{entry.FROMSYMBOL}}</div>
+              <div class="coin-holder">
+                <div class="to-coins col-sm-12 col-md-12 col-lg-12" *ngFor="let item of entry.items">
+                  <div *ngIf="item.TOSYMBOL === 'USD'">
+                    <strong class="exchange">{{item.TOSYMBOL}}</strong> - <span *ngIf="item.PRICE">${{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">$0</span>
+                  </div>
+                  <div *ngIf="item.TOSYMBOL === 'GBP'">
+                    <strong class="exchange">{{item.TOSYMBOL}}</strong> - <span *ngIf="item.PRICE">£{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">£0</span>
+                  </div>
+                  <div *ngIf="item.TOSYMBOL === 'EUR'">
+                    <strong class="exchange">{{item.TOSYMBOL}}</strong> - <span *ngIf="item.PRICE">€{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">€0</span>
+                  </div>
+                  <div *ngIf="item.TOSYMBOL === 'JPY'">
+                    <strong class="exchange">{{item.TOSYMBOL}}</strong> - <span *ngIf="item.PRICE">¥{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">€0</span>
+                  </div>
+                  <div *ngIf="item.TOSYMBOL === 'ZAR'">
+                    <strong class="exchange">{{item.TOSYMBOL}}</strong> - <span *ngIf="item.PRICE">R{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">€0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!isCrypto">
+          <div *ngFor="let entry of cryptoDataTo | search:'TOSYMBOL':searchString; let i = index">
+            <div>
+              <div *ngIf="entry.TOSYMBOL === 'USD'" class="from-header">{{entry.TOSYMBOL}} ($)</div>
+              <div *ngIf="entry.TOSYMBOL === 'GBP'" class="from-header">{{entry.TOSYMBOL}} (£)</div>
+              <div *ngIf="entry.TOSYMBOL === 'EUR'" class="from-header">{{entry.TOSYMBOL}} (€)</div>
+              <div *ngIf="entry.TOSYMBOL === 'JPY'" class="from-header">{{entry.TOSYMBOL}} (¥)</div>
+              <div *ngIf="entry.TOSYMBOL === 'ZAR'" class="from-header">{{entry.TOSYMBOL}} (R)</div>
+              <div class="coin-holder">
+                <div class="to-coins col-sm-12 col-md-12 col-lg-12" *ngFor="let item of entry.items">
+                  <div *ngIf="item.FROMSYMBOL === 'BTC'">
+                    <strong class="exchange">{{item.FROMSYMBOL}}</strong> - <span *ngIf="item.PRICE">{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">0</span>
+                  </div>
+                  <div *ngIf="item.FROMSYMBOL === 'ETH'">
+                    <strong class="exchange">{{item.FROMSYMBOL}}</strong> - <span *ngIf="item.PRICE">{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">0</span>
+                  </div>
+                  <div *ngIf="item.FROMSYMBOL === 'XRP'">
+                    <strong class="exchange">{{item.FROMSYMBOL}}</strong> - <span *ngIf="item.PRICE">{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">0</span>
+                  </div>
+                  <div *ngIf="item.FROMSYMBOL === 'LTC'">
+                    <strong class="exchange">{{item.FROMSYMBOL}}</strong> - <span *ngIf="item.PRICE">{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">0</span>
+                  </div>
+                  <div *ngIf="item.FROMSYMBOL === 'BCH'">
+                    <strong class="exchange">{{item.FROMSYMBOL}}</strong> - <span *ngIf="item.PRICE">{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">0</span>
+                  </div>
+                  <div *ngIf="item.FROMSYMBOL === 'ETC'">
+                    <strong class="exchange">{{item.FROMSYMBOL}}</strong> - <span *ngIf="item.PRICE">{{item.PRICE}}</span> <span class="no-data" *ngIf="!item.PRICE">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stock-container row">
+      <div *ngFor="let product of products | search:'productName,category,productSku':query"
+        class="card col-sm-6 col-md-6 col-lg-4 mt-4">
+        <div class="stock-holder">
+          <a data-toggle="tooltip" title="Update Product" (click)="editProduct(product._id)"><img class="card-img-top"
+              src="data:image/jpeg;base64,{{product.productImage}}" alt="Card image cap"></a>
+          <div class="card-body">
+            <h5 class="card-title">{{product.productName}}</h5>
+            <ul>
+              <li *ngIf="product.active === true"><strong class="product-active">Active</strong></li>
+              <li *ngIf="product.active === false"><strong class="product-inactive">Inactive</strong></li>
+              <li><strong>Category: </strong>{{product.categoryName}}</li>
+              <li><strong>Was: </strong>R{{product.productPriceWas}}</li>
+              <li><strong>Now: </strong>R{{product.productPriceNow}}</li>
+            </ul>
+          </div>
+          <div class="action-holder">
+            <a data-toggle="tooltip" title="Edit Product" class="action-item" (click)="editProduct(product._id)">
+              <i class="fa fa-edit fa-2x"></i>
+            </a>
+            <a data-toggle="tooltip" title="Delete Product" class="action-item" (click)="deleteProduct(product._id)">
+              <i class="fa fa-trash fa-2x"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

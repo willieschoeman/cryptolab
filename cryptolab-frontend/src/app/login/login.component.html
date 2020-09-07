@@ -1,0 +1,39 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading">
+  <div class="fill">
+    <div>
+      <h1>Cryptolab Admin Console</h1>
+      <!-- Login -->
+      <div *ngIf="showForgotPasswordForm === false" class="login-form">
+        <h2>Log In</h2>
+        <form [formGroup]="userForm" class="login-container" (ngSubmit)="login()">
+
+          <div class="form-group">
+            <label class="form-control-label">Username</label>
+            <input type="text" placeholder="Enter your username" formControlName="username" class="form-control"
+              [ngClass]="{ 'is-invalid': isSubmitted && formControls.username.errors }">
+            <div *ngIf="isSubmitted && formControls.username.errors" class="invalid-feedback">
+              <div *ngIf="formControls.username.errors.required">Username is required!</div>
+            </div>
+          </div>
+
+          <div class="form-group" [ngClass]="{ 'has-danger': isSubmitted && formControls.password.errors }">
+            <label class="form-control-label">Password</label>
+            <input type="password" placeholder="Enter your password" formControlName="password" class="form-control"
+              [ngClass]="{ 'is-invalid': isSubmitted && formControls.password.errors }">
+            <div *ngIf="isSubmitted && formControls.password.errors" class="invalid-feedback">
+              <div *ngIf="formControls.password.errors.required">Password is required!</div>
+            </div>
+          </div>
+
+          <div class="clearfix">
+            <p class="error-mgs">{{errorMgs}}</p>
+          </div>
+          <div>
+            <input type="submit" value="Log In" class="btn btn-primary btn-lg">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
