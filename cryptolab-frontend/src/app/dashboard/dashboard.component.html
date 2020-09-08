@@ -77,34 +77,6 @@
         </div>
       </div>
     </div>
-
-    <div class="stock-container row">
-      <div *ngFor="let product of products | search:'productName,category,productSku':query"
-        class="card col-sm-6 col-md-6 col-lg-4 mt-4">
-        <div class="stock-holder">
-          <a data-toggle="tooltip" title="Update Product" (click)="editProduct(product._id)"><img class="card-img-top"
-              src="data:image/jpeg;base64,{{product.productImage}}" alt="Card image cap"></a>
-          <div class="card-body">
-            <h5 class="card-title">{{product.productName}}</h5>
-            <ul>
-              <li *ngIf="product.active === true"><strong class="product-active">Active</strong></li>
-              <li *ngIf="product.active === false"><strong class="product-inactive">Inactive</strong></li>
-              <li><strong>Category: </strong>{{product.categoryName}}</li>
-              <li><strong>Was: </strong>R{{product.productPriceWas}}</li>
-              <li><strong>Now: </strong>R{{product.productPriceNow}}</li>
-            </ul>
-          </div>
-          <div class="action-holder">
-            <a data-toggle="tooltip" title="Edit Product" class="action-item" (click)="editProduct(product._id)">
-              <i class="fa fa-edit fa-2x"></i>
-            </a>
-            <a data-toggle="tooltip" title="Delete Product" class="action-item" (click)="deleteProduct(product._id)">
-              <i class="fa fa-trash fa-2x"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    
   </div>
 </div>
